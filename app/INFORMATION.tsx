@@ -58,7 +58,7 @@ export default function Information() {
             activeOpacity={0.7}
           >
             <Text style={styles.githubText}>Xem Source Code trên Github</Text>
-            <Text style={styles.githubLink}>github.com/0308231043-collab/PHAT043KT2</Text>
+            <Text style={styles.githubLink}>https://github.com/0308231064-collab/THI064KT2.git</Text>
           </TouchableOpacity>
         </View>
       </View>

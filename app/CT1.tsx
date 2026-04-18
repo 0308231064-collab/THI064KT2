@@ -6,6 +6,10 @@ import { Animated, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, Vie
 export default function CT1Screen() {
   const router = useRouter();
   const [isRunning, setIsRunning] = useState(false);
+  
+  // Thêm state phần trăm pin (mặc định 1% cho màn hình hết pin)
+  const [batteryPercent, setBatteryPercent] = useState(1); 
+  
   const lastTap = useRef(0);
   const blinkAnim = useRef(new Animated.Value(0)).current;
 
@@ -86,7 +90,7 @@ export default function CT1Screen() {
     );
   }
 
-  // --- GIAO DIỆN TRONG (GIỮ NGUYÊN HOÀN TOÀN) ---
+  // --- GIAO DIỆN TRONG (GIỮ NGUYÊN HOÀN TOÀN + THÊM HIỂN THỊ % PIN) ---
   return (
     <Pressable style={styles.container} onPress={handleDoubleTap}>
       <StatusBar hidden={true} />
@@ -97,6 +101,9 @@ export default function CT1Screen() {
         </View>
         <View style={styles.batteryTip} />
       </View>
+
+      {/* THÊM PHẦN TRĂM PIN Ở ĐÂY */}
+      <Text style={styles.percentageText}>{batteryPercent}%</Text>
 
       <Ionicons name="flash" size={28} color="rgba(255,255,255,0.4)" style={styles.lightning} />
 
@@ -215,9 +222,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // STYLE MÔ PHỎNG (GIỮ NGUYÊN)
+  // STYLE MÔ PHỎNG (GIỮ NGUYÊN + THÊM PERCENTAGE TEXT)
   container: { flex: 1, backgroundColor: "#000", alignItems: "center", justifyContent: "center" },
-  batteryContainer: { flexDirection: "row", alignItems: "center", marginBottom: 15 },
+  batteryContainer: { flexDirection: "row", alignItems: "center", marginBottom: 5 }, // Chỉnh margin xíu để chèn chữ đẹp hơn
   batteryBody: { 
     width: 75, height: 34, borderWidth: 1.5, 
     borderColor: "rgba(255, 255, 255, 0.35)", borderRadius: 6, 
@@ -225,6 +232,15 @@ const styles = StyleSheet.create({
   },
   redBatteryLevel: { width: "12%", height: "85%", backgroundColor: "#FF3B30", borderRadius: 2 },
   batteryTip: { width: 4, height: 12, backgroundColor: "rgba(255, 255, 255, 0.35)", borderTopRightRadius: 3, borderBottomRightRadius: 3 },
+  
+  // STYLE THÊM CHO % PIN
+  percentageText: {
+    color: "#FF3B30", 
+    fontSize: 18,
+    fontWeight: "700",
+    marginBottom: 10,
+  },
+
   lightning: { marginBottom: 90 },
   cableContainer: { alignItems: "center", position: "absolute", bottom: 0 },
   cableConnector: { width: 14, height: 18, backgroundColor: "rgba(255, 255, 255, 0.4)", borderTopLeftRadius: 3, borderTopRightRadius: 3 },
