@@ -7,13 +7,12 @@ export default function CT1Screen() {
   const router = useRouter();
   const [isRunning, setIsRunning] = useState(false);
   
-  // Thêm state phần trăm pin (mặc định 1% cho màn hình hết pin)
+  // Phần trăm pin
   const [batteryPercent, setBatteryPercent] = useState(1); 
   
   const lastTap = useRef(0);
   const blinkAnim = useRef(new Animated.Value(0)).current;
 
-  // Giữ nguyên logic hiệu ứng pin
   useEffect(() => {
     if (isRunning) {
       Animated.loop(
@@ -27,7 +26,6 @@ export default function CT1Screen() {
     }
   }, [isRunning]);
 
-  // Giữ nguyên logic Double Tap
   const handleDoubleTap = () => {
     const now = Date.now();
     const DOUBLE_PRESS_DELAY = 300; 
@@ -38,22 +36,18 @@ export default function CT1Screen() {
     }
   };
 
-  // --- GIAO DIỆN NGOÀI (ĐÃ ĐƯỢC LÀM ĐẸP) ---
+  // --- GIAO DIỆN NGOÀI ---
   if (!isRunning) {
     return (
       <View style={styles.setupContainer}>
         <StatusBar barStyle="dark-content" />
         
-        {/* Vòng tròn trang trí mờ phía sau */}
         <View style={styles.bgCircle} />
 
         <View style={styles.card}>
           <View style={styles.iconContainer}>
-             <View style={styles.iconWrapper}>
-                <Ionicons name="battery-dead" size={38} color="#FF3B30" />
-             </View>
-             {/* Chấm xanh nhỏ trạng thái */}
-             <View style={styles.statusDot} />
+             {/* Đã bỏ "cục hình vuông" iconWrapper, chỉ giữ lại Icon */}
+             <Ionicons name="battery-dead" size={50} color="#FF3B30" />
           </View>
           
           <Text style={styles.title}>Mô phỏng Hết Pin</Text>
@@ -90,7 +84,7 @@ export default function CT1Screen() {
     );
   }
 
-  // --- GIAO DIỆN TRONG (GIỮ NGUYÊN HOÀN TOÀN + THÊM HIỂN THỊ % PIN) ---
+  // --- GIAO DIỆN MÔ PHỎNG BÊN TRONG ---
   return (
     <Pressable style={styles.container} onPress={handleDoubleTap}>
       <StatusBar hidden={true} />
@@ -102,7 +96,6 @@ export default function CT1Screen() {
         <View style={styles.batteryTip} />
       </View>
 
-      {/* THÊM PHẦN TRĂM PIN Ở ĐÂY */}
       <Text style={styles.percentageText}>{batteryPercent}%</Text>
 
       <Ionicons name="flash" size={28} color="rgba(255,255,255,0.4)" style={styles.lightning} />
@@ -117,12 +110,11 @@ export default function CT1Screen() {
 }
 
 const styles = StyleSheet.create({
-  // STYLE SETUP MỚI (LÀM ĐẸP)
   setupContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F8F9FB", // Màu nền xám cực nhẹ
+    backgroundColor: "#F8F9FB",
   },
   bgCircle: {
     position: 'absolute',
@@ -139,7 +131,6 @@ const styles = StyleSheet.create({
     padding: 35,
     borderRadius: 32,
     alignItems: "center",
-    // Đổ bóng kiểu iOS chuyên nghiệp
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 15 },
     shadowOpacity: 0.1,
@@ -147,27 +138,9 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   iconContainer: {
-    position: 'relative',
-    marginBottom: 20,
-  },
-  iconWrapper: {
-    width: 80,
-    height: 80,
-    borderRadius: 24,
-    backgroundColor: "#FFF2F2",
+    marginBottom: 15,
     justifyContent: "center",
     alignItems: "center",
-  },
-  statusDot: {
-    position: 'absolute',
-    bottom: 2,
-    right: 2,
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: '#FF3B30',
-    borderWidth: 3,
-    borderColor: '#fff',
   },
   title: { 
     fontSize: 24, 
@@ -222,9 +195,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // STYLE MÔ PHỎNG (GIỮ NGUYÊN + THÊM PERCENTAGE TEXT)
   container: { flex: 1, backgroundColor: "#000", alignItems: "center", justifyContent: "center" },
-  batteryContainer: { flexDirection: "row", alignItems: "center", marginBottom: 5 }, // Chỉnh margin xíu để chèn chữ đẹp hơn
+  batteryContainer: { flexDirection: "row", alignItems: "center", marginBottom: 5 },
   batteryBody: { 
     width: 75, height: 34, borderWidth: 1.5, 
     borderColor: "rgba(255, 255, 255, 0.35)", borderRadius: 6, 
@@ -233,7 +205,6 @@ const styles = StyleSheet.create({
   redBatteryLevel: { width: "12%", height: "85%", backgroundColor: "#FF3B30", borderRadius: 2 },
   batteryTip: { width: 4, height: 12, backgroundColor: "rgba(255, 255, 255, 0.35)", borderTopRightRadius: 3, borderBottomRightRadius: 3 },
   
-  // STYLE THÊM CHO % PIN
   percentageText: {
     color: "#FF3B30", 
     fontSize: 18,
