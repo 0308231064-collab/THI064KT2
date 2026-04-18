@@ -5,7 +5,7 @@ export default function Information() {
   const router = useRouter();
 
   // ĐÃ SỬA: Thay link chuẩn của Phát vào đây
-  const githubURL = "https://github.com/0308231043-collab/PHAT043KT2";
+  const githubURL = "https://github.com/0308231064-collab/THI064KT2.git";
 
   const openGithub = async () => {
     try {
